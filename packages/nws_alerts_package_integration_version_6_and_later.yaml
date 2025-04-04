@@ -153,55 +153,73 @@ script:
   nws_alerts_announce_tornado_warning:
     alias: NWS Alerts Announce Tornado Warning
     sequence:
+      # Set volume for Alexa devices
       - service: media_player.volume_set
         data:
           entity_id:
-            - media_player.basement_dot
-            - media_player.bedroom_2_dot
-            - media_player.computer_room_dot
-            - media_player.garage_dot
-            - media_player.kitchen_dot
-            - media_player.livingroom_dot
-            - media_player.master_bedroom_dot
+            - media_player.bathroom_show
           volume_level: 0.9
+      
+      # Set volume for Google devices
+      - service: media_player.volume_set
+        data:
+          entity_id:
+            - media_player.speaker_great_room
+          volume_level: 0.9      
+      # First announcement with OpenAI TTS on Google devices
+      - service: tts.speak
+        data:
+          cache: true
+          message: "Attention! Attention! The National Weather Service Has issued a tornado warning for our area."
+          entity_id: tts.openai_tts_shimmer
+          media_player_entity_id: 
+            - media_player.speaker_great_room
+      # First announcement with Alexa devices
       - service: notify.alexa_media
         data:
           target: 
-            - media_player.basement_dot
-            - media_player.bedroom_2_dot
-            - media_player.computer_room_dot
-            - media_player.garage_dot
-            - media_player.kitchen_dot
-            - media_player.livingroom_dot
-            - media_player.master_bedroom_dot
+            - media_player.bathroom_show
           data:
             type: tts
           message: Attention!,,,Attention!,,,The National Weather Service Has issued a tornado warning for our area.
+      
+      # Delay before alert tone
       - delay: '00:00:15'
+      
+      # Alert tone on Google devices
+      - service: media_player.play_media
+        data:
+          entity_id:
+            - media_player.speaker_great_room
+          media_content_id: "https://your_remote_access.ui.nabu.casa/local/mp3/nws_alert_tone.mp3"
+          media_content_type: music
+      
+      # Alert tone on Alexa devices
       - service: notify.alexa_media
         data:
           message: "<audio src='https://your_remote_access.ui.nabu.casa/local/mp3/nws_alert_tone.mp3' />"
           target: 
-            - media_player.basement_dot
-            - media_player.bedroom_2_dot
-            - media_player.computer_room_dot
-            - media_player.garage_dot
-            - media_player.kitchen_dot
-            - media_player.livingroom_dot
-            - media_player.master_bedroom_dot
+            - media_player.bathroom_show
           data:
             type: tts
+      
+      # Delay before second announcement
       - delay: '00:00:25'
+      
+      # Second announcement with OpenAI TTS on Google devices
+      - service: tts.speak
+        data:
+          cache: true
+          message: "Attention! Attention! The National Weather Service Has issued a tornado warning for our area."
+          entity_id: tts.openai_tts_shimmer
+          media_player_entity_id: 
+            - media_player.speaker_great_room
+      
+      # Second announcement with Alexa devices
       - service: notify.alexa_media
         data:
           target: 
-            - media_player.basement_dot
-            - media_player.bedroom_2_dot
-            - media_player.computer_room_dot
-            - media_player.garage_dot
-            - media_player.kitchen_dot
-            - media_player.livingroom_dot
-            - media_player.master_bedroom_dot
+            - media_player.bathroom_show
           data:
             type: tts
           message: Attention!,,,Attention!,,,The National Weather Service Has issued a tornado warning for our area.
@@ -209,47 +227,75 @@ script:
   nws_alerts_announce_thunderstorm_warning:
     alias: NWS Alerts Announce Thunderstorm Warning  
     sequence:
+      # Set volume for Alexa devices
       - service: media_player.volume_set
         data:
           entity_id:
-            - media_player.basement_dot
-            - media_player.computer_room_dot
-            - media_player.garage_dot
-            - media_player.kitchen_dot
-            - media_player.livingroom_dot
+            - media_player.bathroom_show
           volume_level: 0.9
+      
+      # Set volume for Google devices
+      - service: media_player.volume_set
+        data:
+          entity_id:
+            - media_player.speaker_great_room
+          volume_level: 0.9
+      
+      # First announcement with OpenAI TTS on Google devices
+      - service: tts.speak
+        data:
+          cache: true
+          message: "Attention! Attention! The National Weather Service Has issued a severe thunderstorm warning for our area."
+          entity_id: tts.openai_tts_shimmer
+          media_player_entity_id: 
+            - media_player.speaker_great_room
+
+      # First announcement with Alexa devices
       - service: notify.alexa_media
         data:
           target: 
-            - media_player.basement_dot
-            - media_player.computer_room_dot
-            - media_player.garage_dot
-            - media_player.kitchen_dot
-            - media_player.livingroom_dot
+            - media_player.bathroom_show
           data:
             type: tts
           message: Attention!,,,Attention!,,,The National Weather Service Has issued a severe thunderstorm warning for our area.
+      
+      # Delay before alert tone
       - delay: '00:00:15'
+      
+      # Alert tone on Google devices
+      - service: media_player.play_media
+        data:
+          entity_id:
+            - media_player.speaker_great_room
+          media_content_id: "https://your_remote_access.ui.nabu.casa/local/mp3/nws_alert_tone.mp3"
+          media_content_type: music
+      
+      # Alert tone on Alexa devices
       - service: notify.alexa_media
         data:
           message: "<audio src='https://your_remote_access.ui.nabu.casa/local/mp3/nws_alert_tone.mp3' />"
           target: 
-            - media_player.basement_dot
-            - media_player.computer_room_dot
-            - media_player.garage_dot
-            - media_player.kitchen_dot
-            - media_player.livingroom_dot
+            - media_player.bathroom_show
           data:
             type: tts
+      
+      # Delay before second announcement
       - delay: '00:00:25'
+      
+      # Second announcement with OpenAI TTS on Google devices
+      - service: tts.speak
+        data:
+          cache: true
+          message: "Attention! Attention! The National Weather Service Has issued a severe thunderstorm warning for our area."
+          entity_id: tts.openai_tts_shimmer
+          media_player_entity_id: 
+            - media_player.speaker_great_room
+      
+      # Second announcement with Alexa devices
       - service: notify.alexa_media
         data:
           target: 
-            - media_player.basement_dot
-            - media_player.computer_room_dot
-            - media_player.garage_dot
-            - media_player.kitchen_dot
-            - media_player.livingroom_dot
+            - media_player.bathroom_show
           data:
             type: tts
           message: Attention!,,,Attention!,,,The National Weather Service Has issued a severe thunderstorm warning for our area.
